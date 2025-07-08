@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Booking Assistant - Powered by IBM watsonx</title>
+    
+    <!-- IBM Carbon Design System -->
+    <link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/web-components/version/v2.8.0/styles.min.css">
+    <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/version/v2.8.0/index.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --cinema-red: #E50914;
+            --cinema-dark: #141414;
+            --cinema-gold: #FFD700;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: var(--cinema-dark);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070') center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--cinema-red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .content-wrapper {
+            max-width: 1600px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .hero-text {
+            padding-right: 2rem;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+        
+        .hero-text .highlight {
+            color: var(--cinema-red);
+        }
+        
+        .hero-text p {
+            font-size: 1.25rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #ffffff;
+        }
+        
+        .feature-icon {
+            color: var(--cinema-gold);
+            font-size: 20px;
+        }
+        
+        .chat-container {
+            background-color: #262626;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            min-height: 750px;
+            height: 750px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        .chat-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .chat-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        
+        .chat-header p {
+            color: #999999;
+        }
+        
+        #root {
+            width: 100%;
+            height: 650px;
+            max-height: 650px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex: 1;
+        }
+        
+        .powered-by {
+            text-align: center;
+            margin-top: 2rem;
+            color: #666666;
+            font-size: 0.875rem;
+        }
+        
+        .powered-by a {
+            color: #0f62fe;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                text-align: center;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features {
+                align-items: center;
+            }
+        }
+        
+        /* Loading animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--cinema-red);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🎬</div>
+                    <h2 style="margin: 0; font-weight: 500; color: #ffffff;">Cinema Assistant</h2>
+                </div>
+                <div>
+                    <bx-tag type="red" style="color: #ffffff;">Live</bx-tag>
+                    <bx-tag type="cool-gray" style="margin-left: 0.5rem; color: #ffffff;">AI Powered</bx-tag>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="content-wrapper">
+                <div class="hero-text">
+                    <h1>
+                        Your Personal <span class="highlight">Cinema</span> Booking Assistant
+                    </h1>
+                    <p>
+                        Discover movies, check showtimes, and book tickets effortlessly with our AI-powered assistant. Get personalized recommendations and real-time cinema information.
+                    </p>
+                    
+                    <div class="features">
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Search current movies and ratings</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Find nearby cinemas and showtimes</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Book tickets instantly</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Get personalized movie recommendations</span>
+                        </div>
+                    </div>
+                    
+                    <bx-btn kind="danger" size="lg">
+                        <span slot="icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3.5 7.5l-5 3c-.3.2-.5.1-.5-.2V5c0-.3.2-.4.5-.2l5 3c.2.1.2.3 0 .4z"/>
+                            </svg>
+                        </span>
+                        Try asking about movies
+                    </bx-btn>
+                </div>
+                
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2>Chat with Cinema Assistant</h2>
+                        <p>Ask me about movies, showtimes, or book tickets</p>
+                    </div>
+                    
+                    <div id="root">
+                        <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="powered-by">
+                        Powered by <a href="https://www.ibm.com/watsonx" target="_blank">IBM watsonx Orchestrate</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Watson Orchestrate Chat Integration -->
+    <script>
+        window.wxOConfiguration = {
+            orchestrationID: "5408c5534f9741f49eef813c47a48b5f_bee8b016-5f4b-4c4b-b9ad-a6a034ace62f",
+            hostURL: "https://us-south.watson-orchestrate.cloud.ibm.com",
+            rootElementID: "root",
+            showLauncher: false,
+            crn: "crn:v1:bluemix:public:watsonx-orchestrate:us-south:a/5408c5534f9741f49eef813c47a48b5f:bee8b016-5f4b-4c4b-b9ad-a6a034ace62f::",
+            deploymentPlatform: "ibmcloud",
+            chatOptions: {
+                agentId: "f7f05e1b-6cc6-4ca9-8d29-101de7a82641",
+                agentEnvironmentId: "e0f7b9ea-8d39-4435-b368-94f404012ba8"
+            },
+            layout: {
+                form: "custom",
+                showOrchestrateHeader: false,
+                customElement: document.getElementById("root")
+            },
+            style: {
+                headerColor: '#E50914',
+                userMessageBackgroundColor: '#333333',
+                primaryColor: '#E50914'
+            }
+        };
+
+        // Wait for DOM to be ready before initializing
+        window.addEventListener('DOMContentLoaded', function() {
+            // Ensure the root element exists
+            const rootElement = document.getElementById("root");
+            if (rootElement) {
+                // Update configuration with the actual element
+                window.wxOConfiguration.layout.customElement = rootElement;
+                
+                // Load the wxo script
+                const script = document.createElement('script');
+                script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+                script.addEventListener('load', function () {
+                    console.log('Watson Orchestrate script loaded');
+                    wxoLoader.init();
+                });
+                script.addEventListener('error', function(e) {
+                    console.error('Failed to load Watson Orchestrate script:', e);
+                });
+                document.head.appendChild(script);
+            } else {
+                console.error('Root element not found');
+            }
+        });
+    </script>
+</body>
+</html>

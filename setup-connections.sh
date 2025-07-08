@@ -16,9 +16,13 @@ orchestrate connections add -a tmdb_api
 echo "Step 2: Configuring TMDb connection for draft environment..."
 orchestrate connections configure -a tmdb_api --env draft -k key_value -t team
 
-echo "Step 3: Setting TMDb API key..."
+echo "Step 3: Configuring TMDb connection for live environment..."
+orchestrate connections configure -a tmdb_api --env live -k key_value -t team
+
+echo "Step 4: Setting TMDb API key for both environments..."
 TMDB_KEY="6ca12353845bff48ef6fbc7dd502ec5f"
 orchestrate connections set-credentials -a tmdb_api --env draft -e "api_key=$TMDB_KEY"
+orchestrate connections set-credentials -a tmdb_api --env live -e "api_key=$TMDB_KEY"
 
 # Create MovieGlu connection  
 echo ""
@@ -29,7 +33,10 @@ orchestrate connections add -a movieglu_api
 echo "Step 2: Configuring MovieGlu connection for draft environment..."
 orchestrate connections configure -a movieglu_api --env draft -k key_value -t team
 
-echo "Step 3: Setting MovieGlu credentials..."
+echo "Step 3: Configuring MovieGlu connection for live environment..."
+orchestrate connections configure -a movieglu_api --env live -k key_value -t team
+
+echo "Step 4: Setting MovieGlu credentials for both environments..."
 MOVIEGLU_CLIENT="PERS_241"
 MOVIEGLU_KEY="mZ1zYwcSGn6ayPETBsmEf1dIP9wgFRum2do95Cbu"
 MOVIEGLU_AUTH="Basic UEVSU18yNDE6OFBCaHN3blZuSjlH"
@@ -37,10 +44,13 @@ MOVIEGLU_TERRITORY="FR"
 MOVIEGLU_GEO="48.8566;2.3522"
 
 orchestrate connections set-credentials -a movieglu_api --env draft -e "client=$MOVIEGLU_CLIENT" -e "api_key=$MOVIEGLU_KEY" -e "authorization=$MOVIEGLU_AUTH" -e "territory=$MOVIEGLU_TERRITORY" -e "geolocation=$MOVIEGLU_GEO"
+orchestrate connections set-credentials -a movieglu_api --env live -e "client=$MOVIEGLU_CLIENT" -e "api_key=$MOVIEGLU_KEY" -e "authorization=$MOVIEGLU_AUTH" -e "territory=$MOVIEGLU_TERRITORY" -e "geolocation=$MOVIEGLU_GEO"
 
 echo ""
 echo "=== Connection Setup Complete ==="
+echo "Connections configured for both draft and live environments."
 echo "To verify your connections, run: orchestrate connections list"
+echo ""
 echo "Connection IDs created:"
-echo "- tmdb_api (for TMDb API)"
-echo "- movieglu_api (for MovieGlu API)"
+echo "- tmdb_api (for TMDb API) - configured for draft and live"
+echo "- movieglu_api (for MovieGlu API) - configured for draft and live"

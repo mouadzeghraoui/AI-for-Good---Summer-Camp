@@ -1,6 +1,6 @@
 spec_version: v1
 kind: native
-name: cinema_agent
+name: CineMate
 description: >
   An intelligent cinema assistant that helps users discover movies, find showtimes, 
   check cinema locations, and book tickets using real-time data from TMDb and MovieGlu APIs.
