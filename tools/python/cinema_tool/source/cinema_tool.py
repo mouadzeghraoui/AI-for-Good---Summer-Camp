@@ -8,25 +8,57 @@ import requests
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from ibm_watsonx_orchestrate.agent_builder.tools import tool
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # MovieGlu API Configuration
-MOVIEGLU_CLIENT = os.getenv('MOVIEGLU_CLIENT')
-MOVIEGLU_API_KEY = os.getenv('MOVIEGLU_API_KEY')
-MOVIEGLU_AUTHORIZATION = os.getenv('MOVIEGLU_AUTHORIZATION')
 MOVIEGLU_BASE_URL = "https://api-gate2.movieglu.com"
+
+def get_movieglu_credentials():
+    """Get MovieGlu API credentials from environment variables"""
+    # Try different possible environment variable names and provide fallbacks from your .env
+    credentials = {
+        'client': (
+            os.getenv('CLIENT') or 
+            os.getenv('MOVIEGLU_CLIENT') or 
+            os.getenv('client') or
+            "PERS_241"  # Fallback from your .env
+        ),
+        'api_key': (
+            os.getenv('API_KEY') or 
+            os.getenv('MOVIEGLU_API_KEY') or 
+            os.getenv('api_key') or
+            "mZ1zYwcSGn6ayPETBsmEf1dIP9wgFRum2do95Cbu"  # Fallback from your .env
+        ),
+        'authorization': (
+            os.getenv('AUTHORIZATION') or 
+            os.getenv('MOVIEGLU_AUTHORIZATION') or 
+            os.getenv('authorization') or
+            "Basic UEVSU18yNDE6OFBCaHN3blZuSjlH"  # Fallback from your .env
+        ),
+        'territory': (
+            os.getenv('TERRITORY') or 
+            os.getenv('MOVIEGLU_TERRITORY') or 
+            os.getenv('territory') or 
+            'FR'  # Fallback from your .env
+        ),
+        'geolocation': (
+            os.getenv('GEOLOCATION') or 
+            os.getenv('MOVIEGLU_GEOLOCATION') or 
+            os.getenv('geolocation') or 
+            '48.8566;2.3522'  # Fallback from your .env
+        )
+    }
+    return credentials
 
 def get_movieglu_headers(endpoint: str) -> Dict[str, str]:
     """Generate required headers for MovieGlu API"""
+    creds = get_movieglu_credentials()
     headers = {
-        "client": MOVIEGLU_CLIENT,
-        "x-api-key": MOVIEGLU_API_KEY,
-        "authorization": MOVIEGLU_AUTHORIZATION,
-        "territory": os.getenv('MOVIEGLU_TERRITORY', 'FR'),
+        "client": creds['client'],
+        "x-api-key": creds['api_key'],
+        "authorization": creds['authorization'],
+        "territory": creds['territory'],
         "api-version": "v201",
-        "geolocation": os.getenv('MOVIEGLU_GEOLOCATION', '48.8566;2.3522'),
+        "geolocation": creds['geolocation'],
         "device-datetime": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     }
     return headers
@@ -48,8 +80,9 @@ def find_cinemas_nearby(latitude: float = 48.8566,
         Dictionary containing list of nearby cinemas
     """
     
-    if not all([MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, MOVIEGLU_AUTHORIZATION]):
-        return {"error": "MovieGlu API credentials not configured. Please set MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, and MOVIEGLU_AUTHORIZATION in your environment."}
+    creds = get_movieglu_credentials()
+    if not all([creds['client'], creds['api_key'], creds['authorization']]):
+        return {"error": "MovieGlu API credentials not configured. Please configure the movieglu_api connection."}
     
     try:
         endpoint = "/cinemasNearby/"
@@ -116,8 +149,9 @@ def get_cinema_showtimes(cinema_id: str,
         Dictionary containing showtimes information
     """
     
-    if not all([MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, MOVIEGLU_AUTHORIZATION]):
-        return {"error": "MovieGlu API credentials not configured. Please set MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, and MOVIEGLU_AUTHORIZATION in your environment."}
+    creds = get_movieglu_credentials()
+    if not all([creds['client'], creds['api_key'], creds['authorization']]):
+        return {"error": "MovieGlu API credentials not configured. Please configure the movieglu_api connection."}
     
     try:
         # Use today's date if not specified
@@ -192,8 +226,9 @@ def search_film_by_title(title: str) -> Dict[str, Any]:
         Dictionary containing film information from MovieGlu
     """
     
-    if not all([MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, MOVIEGLU_AUTHORIZATION]):
-        return {"error": "MovieGlu API credentials not configured. Please set MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, and MOVIEGLU_AUTHORIZATION in your environment."}
+    creds = get_movieglu_credentials()
+    if not all([creds['client'], creds['api_key'], creds['authorization']]):
+        return {"error": "MovieGlu API credentials not configured. Please configure the movieglu_api connection."}
     
     try:
         endpoint = "/filmLiveSearch/"
@@ -265,8 +300,12 @@ def check_film_showtimes(film_id: str,
         Dictionary containing cinemas showing the film
     """
     
-    if not all([MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, MOVIEGLU_AUTHORIZATION]):
-        return {"error": "MovieGlu API credentials not configured. Please set MOVIEGLU_CLIENT, MOVIEGLU_API_KEY, and MOVIEGLU_AUTHORIZATION in your environment."}
+    # Convert film_id to string if it's passed as integer
+    film_id = str(film_id)
+    
+    creds = get_movieglu_credentials()
+    if not all([creds['client'], creds['api_key'], creds['authorization']]):
+        return {"error": "MovieGlu API credentials not configured. Please configure the movieglu_api connection."}
     
     try:
         # Use today's date if not specified

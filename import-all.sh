@@ -7,12 +7,12 @@ echo "=== Importing Tools ==="
 
 # Import Movie Search Tool with fallback credentials
 orchestrate tools import -k python \
-  -f "tools/python/movie_search_tool/source/movie_search_tool_v2.py" \
+  -f "tools/python/movie_search_tool/source/movie_search_tool.py" \
   -r "tools/python/movie_search_tool/requirements.txt"
 
 # Import Cinema Tool with fallback credentials
 orchestrate tools import -k python \
-  -f "tools/python/cinema_tool/source/cinema_tool_v2.py" \
+  -f "tools/python/cinema_tool/source/cinema_tool.py" \
   -r "tools/python/cinema_tool/requirements.txt"
 
 # Import Booking Tool

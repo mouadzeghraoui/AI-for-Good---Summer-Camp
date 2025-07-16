@@ -3,6 +3,7 @@ Movie Search Tool for watsonx Orchestrate
 Uses TMDb API for movie information
 """
 
+import os
 import requests
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
@@ -11,6 +12,20 @@ from ibm_watsonx_orchestrate.agent_builder.tools import tool
 # TMDb API Configuration
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500"
+
+def get_tmdb_api_key():
+    """Get TMDb API key from environment variables"""
+    # Try different possible environment variable names:
+    # 1. Connection-injected variables
+    # 2. Direct environment variables
+    # 3. Hardcoded fallback from your .env
+    api_key = (
+        os.getenv('API_KEY') or 
+        os.getenv('TMDB_API_KEY') or 
+        os.getenv('api_key') or
+        "6ca12353845bff48ef6fbc7dd502ec5f"  # Fallback from your .env
+    )
+    return api_key
 
 @tool
 def search_movies(query: str = "", 
@@ -30,8 +45,10 @@ def search_movies(query: str = "",
         Dictionary containing list of movies with their details
     """
     
+    TMDB_API_KEY = get_tmdb_api_key()
+    
     if not TMDB_API_KEY:
-        return {"error": "TMDb API key not configured. Please set TMDB_API_KEY in your environment."}
+        return {"error": "TMDb API key not configured. Please configure the tmdb_api connection."}
     
     try:
         # Determine the endpoint based on status
@@ -115,8 +132,10 @@ def get_movie_details(movie_id: str) -> Dict[str, Any]:
         Dictionary containing detailed movie information
     """
     
+    TMDB_API_KEY = get_tmdb_api_key()
+    
     if not TMDB_API_KEY:
-        return {"error": "TMDb API key not configured. Please set TMDB_API_KEY in your environment."}
+        return {"error": "TMDb API key not configured. Please configure the tmdb_api connection."}
     
     try:
         # Get movie details with additional information
@@ -207,8 +226,10 @@ def get_movie_recommendations(movie_id: str = "",
         Dictionary containing recommended movies
     """
     
+    TMDB_API_KEY = get_tmdb_api_key()
+    
     if not TMDB_API_KEY:
-        return {"error": "TMDb API key not configured. Please set TMDB_API_KEY in your environment."}
+        return {"error": "TMDb API key not configured. Please configure the tmdb_api connection."}
     
     try:
         recommendations = []
