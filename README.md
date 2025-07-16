@@ -1657,7 +1657,7 @@ git push -u origin main
 - It may take a few minutes to deploy
 - Visit the URL to see your live Cinema Agent!
 
-
+![Screenshot](assets/ui.png)
 
 #### 🌟 Share Your Creation:
 Your AI agent is now live on the internet! Share the URL with:
