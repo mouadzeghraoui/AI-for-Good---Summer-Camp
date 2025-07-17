@@ -31,7 +31,8 @@ def get_tmdb_api_key():
 def search_movies(query: str = "", 
                   status: str = "now_playing",
                   genre: str = "",
-                  region: str = "FR") -> Dict[str, Any]:
+                  region: str = "FR",
+                  limit: int = 10) -> Dict[str, Any]:
     """
     Search for movies using TMDb API
     
@@ -40,6 +41,7 @@ def search_movies(query: str = "",
         status: Movie status - 'now_playing', 'upcoming', or 'popular'
         genre: Genre name to filter by (optional, empty string for no filter)
         region: Region code (e.g., 'FR' for France, 'GB' for UK)
+        limit: Maximum number of movies to return (default: 10)
     
     Returns:
         Dictionary containing list of movies with their details
@@ -95,7 +97,7 @@ def search_movies(query: str = "",
         
         # Format the response
         formatted_movies = []
-        for movie in movies[:10]:  # Limit to 10 results
+        for movie in movies[:limit]:  # Limit to specified number of results
             formatted_movie = {
                 "id": str(movie['id']),
                 "title": movie['title'],

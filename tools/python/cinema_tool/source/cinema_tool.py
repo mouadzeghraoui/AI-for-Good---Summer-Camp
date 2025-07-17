@@ -142,7 +142,7 @@ def get_cinema_showtimes(cinema_id: str,
     
     Args:
         cinema_id: MovieGlu cinema ID
-        movie_id: Optional TMDb movie ID to filter showtimes (empty string for all movies)
+        movie_id: Optional MovieGlu film ID to filter showtimes (empty string for all movies)
         date: Date in YYYY-MM-DD format (empty string for today)
     
     Returns:
@@ -202,9 +202,8 @@ def get_cinema_showtimes(cinema_id: str,
                 }
                 film_data['showtimes'].append(showtime_data)
             
-            # Only add films that match the movie_id if specified
-            if not movie_id.strip() or str(film.get('film_id')) == movie_id:
-                formatted_showtimes['films'].append(film_data)
+            # Add all films - movie_id filtering doesn't work since TMDb ID != MovieGlu ID
+            formatted_showtimes['films'].append(film_data)
         
         return formatted_showtimes
         

@@ -10,10 +10,10 @@ orchestrate tools import -k python \
   -f "tools/python/movie_search_tool/source/movie_search_tool.py" \
   -r "tools/python/movie_search_tool/requirements.txt"
 
-# Import Cinema Tool with fallback credentials
+# Import Cinema Simulation Tool (replaces MovieGlu API)
 orchestrate tools import -k python \
-  -f "tools/python/cinema_tool/source/cinema_tool.py" \
-  -r "tools/python/cinema_tool/requirements.txt"
+  -f "tools/python/cinema_simulation_tool/source/cinema_simulation_tool.py" \
+  -r "tools/python/cinema_simulation_tool/requirements.txt"
 
 # Import Booking Tool
 orchestrate tools import -k python \
