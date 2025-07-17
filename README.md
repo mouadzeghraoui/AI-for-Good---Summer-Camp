@@ -36,6 +36,22 @@ orchestrate --version
 
 **If you see a version number, you're ready to go!** ✅
 
+#### Step 3: Add the watsonx Orchestrate environment 
+```bash
+orchestrate env add -n wxo-lts -u https://api.eu-de.watson-orchestrate.cloud.ibm.com/instances/e814f476-62a1-41c6-9736-cd4acf47a8b7
+```
+
+#### Step45: Activate the watsonx Orchestrate environment 
+
+```bash
+orchestrate env activate wxo-lts
+```
+You will be prompted to provide your API key—simply copy and paste it.
+
+```bash
+S2FZhfqQKmT4pcM9nGAal5sQMgOVszwx2fRt_4C0DNzO
+```
+
 > 📚 **Reference:** Follow the complete installation guide at [IBM watsonx Orchestrate ADK Installation](https://developer.watson-orchestrate.ibm.com/getting_started/installing#installing-the-adk)
 
 **Troubleshooting:**
@@ -336,7 +352,16 @@ Time to bring your movie assistant to life! We'll use another automated script:
 cd cinema-agent-lab
 ```
 
-**Step 2:** Run the import script:
+**Step 2:** Before running the script, replace "XY" with your initials:
+
+**IMPORTANT:** To avoid naming conflicts with other students, you must replace "XY" with your initials in the agent name:
+
+1. Open `agents/cinema_agent.yaml` in a text editor
+2. Find the line: `name: XY_CineMate`
+3. Replace "XY" with your initials (e.g., `name: JS_CineMate` for John Smith)
+4. Save the file
+
+**Step 3:** Run the import script:
 
 **For Mac/Linux:**
 ```bash

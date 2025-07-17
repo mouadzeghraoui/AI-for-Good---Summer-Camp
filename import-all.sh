@@ -27,4 +27,4 @@ orchestrate agents import -f ./agents/cinema_agent.yaml
 
 echo "=== Import Complete ==="
 echo "Available tools: search_movies, get_movie_details, get_movie_recommendations, find_cinemas_nearby, get_cinema_showtimes, search_film_by_title, check_film_showtimes, check_seat_availability, create_booking, process_payment, get_booking_status"
-echo "Agent 'cinema_agent' is ready to use!"
+echo "Agent 'XY_CineMate' is ready to use!"

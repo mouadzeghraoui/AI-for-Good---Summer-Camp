@@ -1,6 +1,6 @@
 spec_version: v1
 kind: native
-name: CineMate
+name: XY_CineMate
 description: >
   An intelligent cinema assistant that helps users discover movies, find showtimes, 
   check cinema locations, and book tickets using real-time data from TMDb and MovieGlu APIs.
@@ -67,7 +67,7 @@ instructions: >
   - If a translation is not available, inform the user explicitly in their language and offer the English version only as fallback.
 
 
-llm: watsonx/meta-llama/llama-3-3-70b-instruct   
+llm: watsonx/meta-llama/llama-3-405b-instruct  
 
 style: react
 
