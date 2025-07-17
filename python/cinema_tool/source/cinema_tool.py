@@ -14,37 +14,37 @@ MOVIEGLU_BASE_URL = "https://api-gate2.movieglu.com"
 
 def get_movieglu_credentials():
     """Get MovieGlu API credentials from environment variables"""
-    # Try different possible environment variable names and provide fallbacks from your .env
+    # Try different possible environment variable names and provide fallbacks
     credentials = {
         'client': (
             os.getenv('CLIENT') or 
             os.getenv('MOVIEGLU_CLIENT') or 
             os.getenv('client') or
-            "PERS_241"  # Fallback from your .env
+            "ZN"  # French evaluation credentials
         ),
         'api_key': (
             os.getenv('API_KEY') or 
             os.getenv('MOVIEGLU_API_KEY') or 
             os.getenv('api_key') or
-            "mZ1zYwcSGn6ayPETBsmEf1dIP9wgFRum2do95Cbu"  # Fallback from your .env
+            "g5l4jjtcPUkjtQFGZdPs4mB9AFL3I2Talwt7t1Z7"  # French evaluation credentials
         ),
         'authorization': (
             os.getenv('AUTHORIZATION') or 
             os.getenv('MOVIEGLU_AUTHORIZATION') or 
             os.getenv('authorization') or
-            "Basic UEVSU18yNDE6OFBCaHN3blZuSjlH"  # Fallback from your .env
+            "Basic Wk46dnNvSlNCek5Rb2ND"  # French evaluation credentials
         ),
         'territory': (
             os.getenv('TERRITORY') or 
             os.getenv('MOVIEGLU_TERRITORY') or 
             os.getenv('territory') or 
-            'FR'  # Fallback from your .env
+            'FR'  # France territory
         ),
         'geolocation': (
             os.getenv('GEOLOCATION') or 
             os.getenv('MOVIEGLU_GEOLOCATION') or 
             os.getenv('geolocation') or 
-            '48.8566;2.3522'  # Fallback from your .env
+            '48.8566;2.3522'  # Paris coordinates
         )
     }
     return credentials
