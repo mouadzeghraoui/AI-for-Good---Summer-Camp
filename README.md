@@ -472,7 +472,7 @@ Agent configuration is like **writing an instruction manual for your AI's brain*
 Let's explore what we've configured for your movie assistant:
 
 #### 🧠 The AI Model (Its "Brain Type")
-**What we chose:** `watsonx/mistralai/mistral-large`  
+**What we chose:** `llama-4-maverick-17b-128e-instruct-fp8`  
 **What this means:** We're using a powerful, large language model that's great at reasoning and decision-making  
 **Think of it as:** Choosing a really smart "brain" for your AI
 
@@ -957,7 +957,7 @@ Every time someone asks your AI a question, here's the incredible journey that h
 Think of your AI like a sophisticated robot with four essential layers:
 
 #### 🧠 Layer 1: The Brain (AI Model)
-**What it is:** The `mistralai/mistral-large` language model  
+**What it is:** The `llama-4-maverick-17b-128e-instruct-fp8` language model  
 **What it does:** Understands human language, makes decisions, reasons about problems  
 **Your analogy:** Like having a really smart friend who can understand what you want
 
