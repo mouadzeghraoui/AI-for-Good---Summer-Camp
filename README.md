@@ -92,7 +92,7 @@ If you're comfortable opening a terminal/command prompt:
 
 ```bash
 git clone https://github.com/mouadzeghraoui/AI-for-Good---Summer-Camp.git
-cd cinema-agent-lab
+cd AI-for-Good---Summer-Camp
 ```
 
 **What this does:** Downloads all the lab files to your computer and opens the project folder.
